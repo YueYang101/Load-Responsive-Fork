@@ -1,0 +1,37 @@
+# encoding: utf-8
+# 2024 R1
+SetScriptVersion(Version="24.1.144")
+system1 = GetSystem(Name="SYS")
+engineeringData1 = system1.GetContainer(ComponentName="Engineering Data")
+material1 = engineeringData1.GetMaterial(Name="Structural Steel 3")
+material1.Delete()
+material2 = engineeringData1.GetMaterial(Name="Structural Steel 2")
+material2.Delete()
+matl1 = engineeringData1.CreateMaterial(Name="Stainless Steel")
+matlProp1 = matl1.CreateProperty(
+    Name="Elasticity",
+    Behavior="Isotropic",
+    Qualifiers={"Definition": "", "Behavior": "Isotropic"})
+matlProp1.SetVariableProperty(
+    VariableName="Young's Modulus",
+    Property="Unit",
+    Value="MPa")
+matlProp1.SetData(
+    Index=-1,
+    Variables=["Young's Modulus"],
+    Values=[["69 [MPa]"]])
+matlProp1.SetVariableProperty(
+    VariableName="Young's Modulus",
+    Property="Unit",
+    Value="GPa")
+matlProp1.SetData(
+    Variables=["Young's Modulus"],
+    Values=[["0.069 [GPa]"]])
+matlProp1.SetData(
+    Variables=["Young's Modulus"],
+    Values=[["190 [GPa]"]])
+matlProp1.SetData(
+    Variables=["Poisson's Ratio"],
+    Values=[["0.33"]])
+matl1.DisplayName = "Stainless Steel (fork)"
+Save(Overwrite=True)

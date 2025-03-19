@@ -1,0 +1,41 @@
+# encoding: utf-8
+# 2024 R1
+SetScriptVersion(Version="24.1.144")
+system1 = GetSystem(Name="SYS")
+model1 = system1.GetContainer(ComponentName="Model")
+model1.Edit()
+template1 = GetTemplate(
+    TemplateName="Static Structural",
+    Solver="ANSYS")
+system2 = GetSystem(Name="SYS 1")
+system3 = template1.CreateSystem(
+    Position="Right",
+    RelativeTo=system2)
+system3.DisplayText = "Folded Butterfly Fork"
+system4 = template1.CreateSystem(
+    Position="Right",
+    RelativeTo=system3)
+system4.DisplayText = "Extended Butterfly Fork"
+geometry1 = system3.GetContainer(ComponentName="Geometry")
+geometry1.SetFile(FilePath="C:/Users/yy131/Downloads/folded butterfly fork.stl")
+geometry2 = system4.GetContainer(ComponentName="Geometry")
+geometry2.SetFile(FilePath="C:/Users/yy131/Downloads/extended butterfly fork.stl")
+modelComponent1 = system3.GetComponent(Name="Model")
+modelComponent1.Refresh()
+model2 = system3.GetContainer(ComponentName="Model")
+model2.Edit()
+model1.Exit()
+model2.Exit()
+geometry1.Edit(IsDiscoveryGeometry=True)
+geometry1.Exit()
+geometry2.Edit(IsSpaceClaimGeometry=True)
+geometry2.Exit()
+geometry2.SetFile(FilePath="C:/Users/yy131/Downloads/extended fork.iges")
+modelComponent2 = system4.GetComponent(Name="Model")
+modelComponent2.Refresh()
+model3 = system4.GetContainer(ComponentName="Model")
+model3.Edit()
+geometry1.SetFile(FilePath="C:/Users/yy131/Downloads/folded butterfly fork.iges")
+model3.Exit()
+Save(Overwrite=True)
+Save(Overwrite=True)
